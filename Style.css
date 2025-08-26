@@ -1,0 +1,134 @@
+.upload-container {
+  width: 400px;
+  margin: 50px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.upload-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.dropzone {
+  border: 2px dashed #888;
+  border-radius: 10px;
+  padding: 60px 100px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  position: relative;
+}
+
+.dropzone:hover {
+  border-color: #2563eb;
+}
+
+.dropzone p {
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.select-button {
+  padding: 10px 20px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.file-input {
+  display: none;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.upload-btn {
+  padding: 10px 20px;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.upload-btn.disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.reset-btn {
+  padding: 10px 20px;
+  background-color: #2563eb; /* purple */
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/*JobDescription*/
+/* JobDescription.css */
+
+/* Container styling */
+.job-description-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 1.5rem;
+}
+
+/* Heading */
+.job-description-container h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: #1f2937; /* dark gray */
+}
+
+/* Textarea styling */
+.job-description-container textarea {
+  width: 100%;
+  min-height: 200px; /* longer text box */
+  padding: 1rem;
+  border: 2px solid #d1d5db; /* light gray border */
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  resize: vertical; /* allow vertical resizing */
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.job-description-container textarea:focus {
+  outline: none;
+  border-color: #3b82f6; /* blue on focus */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Submit button styling */
+.job-description-container button {
+  padding: 0.75rem 1.5rem;
+  background-color: #3b82f6; /* Tailwind blue-600 */
+  color: #ffffff;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.job-description-container button:hover {
+  background-color: #2563eb; /* Tailwind blue-700 */
+  transform: translateY(-2px);
+}
+
+/* Message styling */
+.job-description-container .message {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #16a34a; /* green-600 */
+}

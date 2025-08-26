@@ -1,11 +1,16 @@
-import ResumeUpload from "./ResumeUpload";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./HomePage";
+import Dashboard from "./Dashboard";
 
 function App() {
   return (
-    <div className="App p-6">
-      <h1 className="text-2xl font-bold">Smart Resume Analyzer</h1>
-      <ResumeUpload />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />         {/* Home page */}
+        <Route path="/dashboard" element={<Dashboard />} /> {/* Dashboard page */}
+      </Routes>
+    </Router>
   );
 }
+
 export default App;

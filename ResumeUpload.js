@@ -1,139 +1,127 @@
 import React, { useState } from "react";
+import "./Style.css"
 
 
 function ResumeUpload() {
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [rawText, setRawText] = useState("");
   const [parsedData, setParsedData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleFileChange = (e) => {
-  const selectedFile = e.target.files[0];
-  if (selectedFile.size > 5 * 1024 * 1024) { // 5 MB
-    alert("File is too large! Maximum size is 5 MB.");
-    return;
-  }
-  setFile(selectedFile);
+  const handleFilesChange = (e) => {
+  setFiles(e.target.files);  // stores all selected files
 };
 
-  const handleUpload = () => {
-    if (!file) return alert("Please select a PDF file!");
+  const handleUpload = async () => {
+  if (files.length === 0) return alert("Please select at least one PDF file!");
 
-    const formData = new FormData();
-    formData.append("file", file);
+  const formData = new FormData();
+  for (let i = 0; i < files.length; i++) {
+    formData.append("resumes", files[i]); // key must match backend
+  }
 
-    setLoading(true);
-    fetch("http://127.0.0.1:5000/upload", {
+  setLoading(true);
+  try {
+    const res = await fetch("http://127.0.0.1:5000/upload", {
       method: "POST",
       body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setRawText(data.raw_text);
-        setParsedData(data.parsed_data);
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Error uploading resume. Please try again.");
-      })
-      .finally(() => setLoading(false));
-  };
+    });
+
+    const data = await res.json();
+    setRawText(data.parsed_resumes.map(r => r.raw_text).join("\n\n---\n\n"));
+    setParsedData(data.parsed_resumes.map(r => r.parsed_data)); // first resume
+  } catch (err) {
+    console.error(err);
+    alert("Error uploading resumes. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleReset = () => {
-    setFile(null);
+    setFiles([]);
     setRawText("");
-    setParsedData(null);
+    setParsedData([]);
   };
 
   return (
-    <div className="p-6 border rounded bg-white shadow">
-      <h2 className="text-xl font-bold">Upload Resume</h2>
+<div className="upload-container">
+  <h2 className="upload-heading">Upload Resume</h2>
 
-      <input
-        type="file"
-        accept="application/pdf"
-        onChange={handleFileChange}
-        className="mt-4"
-      />
+  <div className="dropzone">
+    <p>Drag & drop your PDF here, or click the button below</p>
+    <button
+      className="select-button"
+      onClick={() => document.getElementById("fileInput").click()}
+    >
+      Select File
+    </button>
+    <input
+      type="file"
+      id="fileInput"
+      multiple
+      accept=".pdf"
+      onChange={handleFilesChange}
+      className="file-input"
+    />
+  </div>
 
-      <div className="mt-2 flex space-x-2">
-        <button
-          onClick={handleUpload}
-          disabled={loading}
-          className={`px-4 py-2 rounded text-white ${
-            loading ? "bg-gray-400" : "bg-green-500"
-          }`}
-        >
-          {loading ? "Uploading..." : "Upload"}
-        </button>
+  <div className="buttons">
+    <button
+      onClick={handleUpload}
+      disabled={loading}
+      className={`upload-btn ${loading ? "disabled" : ""}`}
+    >
+      {loading ? "Uploading..." : "Upload"}
+    </button>
 
-        <button
-          onClick={handleReset}
-          className="px-4 py-2 rounded bg-purple-500 text-white"
-        >
-          Reset
-        </button>
-      </div>
+    <button onClick={handleReset} className="reset-btn">
+      Reset
+    </button>
+  </div>
+
 
       {/* Show Parsed Data in Card Layout */}
-      {parsedData && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          {/* Personal Info */}
-          <div className="bg-white p-4 rounded-xl shadow border">
-            <h3 className="font-bold text-lg mb-2">Personal Info</h3>
-            <p><b>Name:</b> {parsedData.name || "Not found"}</p>
-            <p><b>Email:</b> {parsedData.email || "Not found"}</p>
-            <p><b>Phone:</b> {parsedData.phone || "Not found"}</p>
-          </div>
+      {parsedData && parsedData.map((resume, idx) => (
+  <div key={idx} className="bg-white p-4 rounded-xl shadow border mt-6">
+    <h2 className="text-lg font-bold mb-2">{resume.filename}</h2>
 
-          {/* Education */}
-          <div className="bg-white p-4 rounded-xl shadow border">
-            <h3 className="font-bold text-lg mb-2">Education</h3>
-            {parsedData.education?.length ? (
-              <ul className="list-disc pl-5 space-y-1">
-                {parsedData.education.map((edu, idx) => (
-                  <li key={idx}>{edu}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>No education details found</p>
-            )}
-          </div>
+    {/* Education */}
+    <div>
+      <h3 className="font-bold">Education</h3>
+      {resume.education?.length ? (
+        <ul className="list-disc pl-5">
+          {resume.education.map((edu, i) => <li key={i}>{edu}</li>)}
+        </ul>
+      ) : <p>No education details found</p>}
+    </div>
 
-          {/* Experience */}
-          <div className="bg-white p-4 rounded-xl shadow border">
-            <h3 className="font-bold text-lg mb-2">Experience</h3>
-            {parsedData.experience?.length ? (
-              <ul className="list-disc pl-5 space-y-1">
-                {parsedData.experience.map((exp, idx) => (
-                  <li key={idx}>{exp}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>No experience details found</p>
-            )}
-          </div>
+    {/* Experience */}
+    <div>
+      <h3 className="font-bold">Experience</h3>
+      {resume.experience?.length ? (
+        <ul className="list-disc pl-5">
+          {resume.experience.map((exp, i) => <li key={i}>{exp}</li>)}
+        </ul>
+      ) : <p>No experience details found</p>}
+    </div>
 
-          {/* Skills */}
-          <div className="bg-white p-4 rounded-xl shadow border">
-            <h3 className="font-bold text-lg mb-2">Skills</h3>
-            <div className="flex flex-wrap gap-2">
-              {parsedData.skills?.length ? (
-                parsedData.skills.map((skill, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm shadow"
-                  >
-                    {skill}
-                  </span>
-                ))
-              ) : (
-                <p>No skills detected</p>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+    {/* Skills */}
+    <div>
+      <h3 className="font-bold">Skills</h3>
+      <div className="flex flex-wrap gap-2">
+        {resume.skills?.length ? (
+          resume.skills.map((skill, i) => (
+            <span key={i} className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm shadow">
+              {skill}
+            </span>
+          ))
+        ) : <p>No skills detected</p>}
+      </div>
+    </div>
+  </div>
+))}
 
       {/* Show Raw Resume Text (optional) */}
       {rawText && (

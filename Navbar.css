@@ -1,0 +1,223 @@
+/* Navbar.css */
+
+.bg {
+  position: relative;
+  overflow: hidden; /* Ensures pseudo elements don’t leak out */
+}
+
+/* Dots in top-right corner */
+.bg::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  height: 300px;
+  background-image: radial-gradient(gray 2px, transparent 2px);
+  background-size: 20px 20px; /* spacing between dots */
+  opacity: 0.2;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+/* Dots in bottom-left corner */
+.bg::after {
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 280px;
+  height: 280px;
+  bottom: 1200px;
+  background-image: radial-gradient(gray 2px, transparent 2px);
+  background-size: 20px 20px;
+  opacity: 0.2;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.navbar {
+  background: #ffffff;
+}
+
+
+.navbar .nav-link {
+  font-size: 17px;   
+  margin: 0 20px;   
+  color: #363636;  
+}
+
+.navbar.nav-link hover {
+  color: #b97be0; 
+  transition: 0.3s;
+}
+
+.logo{
+    margin-top: 50px;
+}
+
+
+.btn-1{
+  color: #000000; /* text color */
+  border: 2px #8c52ff; /* border color */
+  background-color: transparent; /* transparent background */
+  padding: 10px 35px;/* more clickable area */
+  border-radius: 8px; /* rounded corners */
+  border-color: #8c52ff;
+  border: 2px solid #0a0a0a;
+  font-size: 18px;
+  transition: all 0.3s ease; 
+  margin-top: -12px;
+
+}
+
+.btn-1:hover {
+  background-color: #8c52ff; /* purple background */
+  color: #ffffff; /* white text */
+  border: 2px solid #8c52ff;
+}
+.mb-4{
+  font-size: 28px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(11, 7, 21, 1) 26%, rgba(140, 82, 255, 1) 100%);
+  -webkit-background-clip: text; /* Safari/Chrome */
+  -webkit-text-fill-color: transparent; /* Safari/Chrome */
+  background-clip: text; /* Standard */
+  color: transparent; /* fallback */
+  font-family:Arial, Helvetica, sans-serif; 
+}
+.lead{
+  font-size: 24px;
+  
+}
+.WhyChoose{
+  margin-top: 60px;
+}
+
+.container-why-choose-us p{
+  font-size: 20px;
+}
+
+.container-why-choose-us {
+  text-align: center;
+  padding: 40px;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columns */
+  gap: 20px; /* space between boxes */
+  margin-top: 30px;
+}
+
+.why-box {
+  display: flex;           /* align icon and text horizontally */
+  align-items: center;     /* vertically center icon and text */
+  gap: 15px;           /* some padding around the box */
+  border: 2px solid #f9f9f9;  /* optional border */
+  border-radius: 12px;     /* rounded corners */
+  margin: 10px 0;          /* spacing between boxes */
+  background-color: #f9f9f9; /* optional background */
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.why-box:hover, .why-box-mid:hover {
+  transform: translateY(-5px);
+}
+
+.why-box i, .why-box-mid i {
+  font-size: 40px;
+  color: #8c52ff; /* purple accent */
+  margin-bottom: 10px;
+  display: block;
+}
+.why-box h2, .why-box-mid h2{
+  font-size: 25px;
+}
+
+.why-box-mid{
+  display: flex;           /* align icon and text horizontally */
+  align-items: center;     /* vertically center icon and text */
+  gap: 15=px;           /* some padding around the box */
+  border: 2px solid #f9f9f9;  /* optional border */
+  border-radius: 12px;     /* rounded corners */
+  margin: 10px 0;          /* spacing between boxes */
+  background-color: #f9f9f9; /* optional background */
+  border-radius: 12px;
+  padding: 20px;
+  margin-left: 300px;
+  margin-right: 300px;
+  margin-top: 30px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.logo {
+  animation: fadeZoom 2s ease-in-out forwards;
+}
+
+@keyframes fadeZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.how-it-works {
+  text-align: center;
+  padding: 50px;
+  background: #f9f9f9;
+}
+.how-it-works h1 {
+  text-align: center;
+  padding: 30px;
+  background: #f9f9f9;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.step {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 220px;
+  transition: transform 0.3s ease;
+}
+
+.step:hover {
+  transform: translateY(-10px);
+}
+
+.number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #6a1b9a;
+  display: block;
+}
+
+.footer a:hover {
+  color: #8c52ff;
+  transition: 0.3s;
+}
+.footer-social i {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.footer-social i:hover {
+  color: #8c52ff;
+  transition: 0.3s;
+}
